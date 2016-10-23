@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+// Create a class for individual todo items
 class Todo {
   id: number;
   description: string;
@@ -11,6 +12,7 @@ class Todo {
   }
 }
 
+// Use a decorator to extend the Component class and provide a template
 @Component({
     selector: 'my-app',
     template: `
@@ -34,22 +36,29 @@ class Todo {
       </section>
       `
 })
+
+// Define all the app's functionality inside the AppComponent class
 export class AppComponent {
-  id = 0;
-  title = 'Generic Todo';
-  todos = [ 
-    new Todo(this.id++, 'Go grocery shopping'), 
-    new Todo(this.id++, 'Walk dog'), 
-  ];
-  createTodo = function(todoForm) {
-    let todo = new Todo(this.id++, todoForm.value.todoDescription);
+  id: number;
+  title: string;
+  todos: Array<Object>;
+  constructor() {
+    this.id = 0;
+    this.title = 'Generic Todo';
+    this.todos = [ 
+      new Todo(this.id++, 'Go grocery shopping'), 
+      new Todo(this.id++, 'Walk dog'), 
+    ];
+  }
+  createTodo(todoForm: Object) {
+    let todo = new Todo(this.id++, todoForm["value"].todoDescription);
     this.todos.push( todo );
-    todoForm.reset();
+    todoForm["reset"]();
 
     event.preventDefault();
   }
-  deleteTodo = function(id) {
-    this.todos = this.todos.filter( (todo) => todo.id !== id);
+  deleteTodo(id: number) {
+    this.todos = this.todos.filter( (todo: Object) => todo["id"] !== id);
 
     event.preventDefault();
   }
